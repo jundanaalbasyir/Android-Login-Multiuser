@@ -1,5 +1,6 @@
 package dev.jundana.loginandregistrationmultiuser.ui;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -105,6 +106,8 @@ public class RegisterActivity extends AppCompatActivity {
                 JSONObject obj = new JSONObject(s);
                 if (!obj.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    finish();
                 } else {
                     Toast.makeText(RegisterActivity.this, "Some error occurred", Toast.LENGTH_SHORT).show();
                 }

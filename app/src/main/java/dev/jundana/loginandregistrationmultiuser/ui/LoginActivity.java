@@ -1,5 +1,6 @@
 package dev.jundana.loginandregistrationmultiuser.ui;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +21,8 @@ import dev.jundana.loginandregistrationmultiuser.helper.RequestHandler;
 import dev.jundana.loginandregistrationmultiuser.helper.SharedPref;
 import dev.jundana.loginandregistrationmultiuser.helper.Url;
 import dev.jundana.loginandregistrationmultiuser.model.Users;
+import dev.jundana.loginandregistrationmultiuser.ui.admin.AdminActivity;
+import dev.jundana.loginandregistrationmultiuser.ui.user.UserActivity;
 
 public class LoginActivity extends AppCompatActivity {
     EditText etUsername, etPassword;
@@ -37,12 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chcekInput();
+                checkInput();
             }
         });
     }
 
-    private void chcekInput() {
+    private void checkInput() {
         if (TextUtils.isEmpty(etUsername.getText().toString().trim())) {
             etUsername.setError("Please enter your email");
             etUsername.requestFocus();
@@ -81,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject obj = new JSONObject(s);
 
                 if (!obj.getBoolean("error")) {
-                    Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
                     JSONObject userJson = obj.getJSONObject("user");
 
                     Users user = new Users(
@@ -91,16 +94,18 @@ public class LoginActivity extends AppCompatActivity {
                             userJson.getString("status")
                     );
 
-                    SharedPref.getInstance(getApplicationContext()).setUserLogin(user);
-                    Users dataUser = SharedPref.getInstance(getApplicationContext()).getUser();
+                    SharedPref.getInstance(LoginActivity.this).setUserLogin(user);
+                    Users dataUser = SharedPref.getInstance(LoginActivity.this).getUser();
 
                     if (dataUser.getStatus().equals("admin")) {
-                        Toast.makeText(getApplicationContext(), "Admin", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                        finish();
                     } else {
-                        Toast.makeText(getApplicationContext(), "User", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, UserActivity.class));
+                        finish();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
