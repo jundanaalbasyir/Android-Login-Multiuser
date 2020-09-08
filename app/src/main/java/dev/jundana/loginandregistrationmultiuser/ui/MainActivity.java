@@ -1,4 +1,4 @@
-package dev.jundana.loginandregistrationmultiuser;
+package dev.jundana.loginandregistrationmultiuser.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import dev.jundana.loginandregistrationmultiuser.ui.RegisterActivity;
+import dev.jundana.loginandregistrationmultiuser.R;
 
 public class MainActivity extends AppCompatActivity {
     Button btnRegister, btnLogin;
