@@ -17,7 +17,9 @@ import java.util.HashMap;
 
 import dev.jundana.loginandregistrationmultiuser.R;
 import dev.jundana.loginandregistrationmultiuser.helper.RequestHandler;
+import dev.jundana.loginandregistrationmultiuser.helper.SharedPref;
 import dev.jundana.loginandregistrationmultiuser.helper.Url;
+import dev.jundana.loginandregistrationmultiuser.model.Users;
 
 public class LoginActivity extends AppCompatActivity {
     EditText etUsername, etPassword;
@@ -80,6 +82,23 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!obj.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                    JSONObject userJson = obj.getJSONObject("user");
+
+                    Users user = new Users(
+                            userJson.getInt("id"),
+                            userJson.getString("username"),
+                            userJson.getString("email"),
+                            userJson.getString("status")
+                    );
+
+                    SharedPref.getInstance(getApplicationContext()).setUserLogin(user);
+                    Users dataUser = SharedPref.getInstance(getApplicationContext()).getUser();
+
+                    if (dataUser.getStatus().equals("admin")) {
+                        Toast.makeText(getApplicationContext(), "Admin", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "User", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
