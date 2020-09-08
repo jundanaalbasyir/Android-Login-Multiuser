@@ -104,15 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 JSONObject obj = new JSONObject(s);
                 if (!obj.getBoolean("error")) {
-//                    Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-//                    JSONObject userJson = obj.getJSONObject("user");
-//                    Users user = new Users(
-//                            userJson.getInt("id"),
-//                            userJson.getString("username"),
-//                            userJson.getString("email"),
-//                            userJson.getString("status")
-//                    );
-                    Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(RegisterActivity.this, "Some error occurred", Toast.LENGTH_SHORT).show();
                 }
