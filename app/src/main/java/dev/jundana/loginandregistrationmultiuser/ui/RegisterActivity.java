@@ -77,12 +77,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private class RegisterUser extends AsyncTask<Void, Void, String> {
-        private String username, email, password, status;
+        private String email, username, password, status;
 
-        RegisterUser(String username, String email, String password, String status) {
+        RegisterUser(String email, String username,  String password, String status) {
+            this.email = email;
             this.username = username;
             this.password = password;
-            this.email = email;
             this.status = status;
         }
 
@@ -91,8 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
             RequestHandler requestHandler = new RequestHandler();
 
             HashMap<String, String> params = new HashMap<>();
-            params.put("username", username);
             params.put("email", email);
+            params.put("username", username);
             params.put("password", password);
             params.put("status", status);
 
